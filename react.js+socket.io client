@@ -1,0 +1,7 @@
+import react,{useeffect,usestate} from "react";
+import {io}  from "socket.io-client";
+import"./app.css";
+const socket = io("http://localhost:5000");
+function app() {const [text,settext] = usestate("");useeffect(() {socket.on("receive-changes",(data){settext(data);});},[]);const handlechange = (e) {const newtext = e.target.value;settext(newtext);socket.emit("send-changes",newtext);};
+return(<div classname="app"> <h1>collaborative document editor</h1> <textare value={text}onchange={handlechange} rows="15" cols="70" /> </div> );}
+export default app

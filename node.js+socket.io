@@ -1,0 +1,10 @@
+const express = require("express");
+const http = require("http");
+const socketio = require("socketio");
+const cors = require("cors");
+const app = express();
+app.use(cors());
+const server= htttp.createserver(app);
+const io = socketio(server,{cors:{origin:"*"}});
+io.on("connection",(socket) {console.log("new uer connected");socket.on("send-changes",(data){socket.broadcast.emit("receive-changes",data);});socket.on("disconnect",() {console.log("user disconnected");});});
+server.listen(5000, () {console.log("server running on port 5000");});
